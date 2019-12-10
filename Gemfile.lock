@@ -15,6 +15,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.4)
+    bcrypt (3.1.12)
     bond (0.5.1)
     builder (3.2.3)
     coderay (1.1.2)
@@ -69,6 +70,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord (= 4.2.5)
+  bcrypt
   json
   pry
   rake
