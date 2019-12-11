@@ -20,7 +20,7 @@ class ApplicationController < Sinatra::Base
 		end
 	end
 
-	post "/login" do
+	post "/signup" do
 		check = User.can_create(params)
 
 		if check != String
@@ -38,7 +38,6 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/login" do
-		puts session
 		if logged_in?
 			redirect "/account"
 		else
@@ -46,7 +45,7 @@ class ApplicationController < Sinatra::Base
 		end
 	end
 
-	post "/account" do
+	post "/login" do
 		@user = User.find_by({username: params["username"]})
 
 		if @user 
