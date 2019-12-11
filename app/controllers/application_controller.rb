@@ -63,6 +63,9 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/account" do
+		puts "Caught: #{session[:user_id]}"
+		puts session.keys
+
 		if logged_in?
 			@user = current_user
 
