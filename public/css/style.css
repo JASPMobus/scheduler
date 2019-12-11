@@ -1,7 +1,7 @@
 /* The sidebar menu */
 .sidebar {
     height: 100%;
-    width: 200px;
+    width: 160px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -26,7 +26,8 @@
     background-color:#505050
   }
   
-  /* Style page content */
+  /* Background */
   .bg {
     background-color: #505050;
+    padding-left: 170px; /* Should be same as sidebar width + sidebar padding*/
   }
