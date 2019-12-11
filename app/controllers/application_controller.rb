@@ -46,13 +46,17 @@ class ApplicationController < Sinatra::Base
 	end
 
 	post "/account" do
-		user = User.find_by(params)
+		@user = User.find_by({username: params["username"]})
 
-		if user
-			session[:user_id] = user.id
-			@session = session
+		if @user 
+			if @user.authenticate(params[:password])
+				session[:user_id] = @user.id
+				@session = session
 
-			redirect "/account"
+				redirect "/account"
+			else
+				redirect "/error/username-password-mismatch"
+			end
 		else
 			redirect "/error/user-not-found"
 		end

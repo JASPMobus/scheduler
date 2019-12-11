@@ -6,9 +6,10 @@ class User < ActiveRecord::Base
             return "bad-password"
         elsif params[:password1] != params[:password2]
             return "password-confirmation"
+        elsif find_by(username: params[:username])
+            return "username-already-taken"
         end
     end
-
 
     def self.create(params)
         confirm = User.all.length
