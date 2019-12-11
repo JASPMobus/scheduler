@@ -1,0 +1,32 @@
+/* The sidebar menu */
+.sidebar {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #000000; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    text-align: center;
+  }
+
+/* The navigation menu links */
+.sidebar a {
+    padding: 10px;
+    font-size: 20px;
+    color: #FFFFFF;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidebar a:hover {
+    color: #FFFFFF;
+    background-color:#505050
+  }
+  
+  /* Style page content */
+  .bg {
+    background-color: #505050;
+  }
