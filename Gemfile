@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'activerecord', '~> 5.1', '>= 5.1.5'
+gem 'activerecord', '~> 6.0'
 gem 'bcrypt'
 gem 'json'
 gem 'rake'
