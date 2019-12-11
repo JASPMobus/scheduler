@@ -38,6 +38,7 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/login" do
+		puts session
 		if logged_in?
 			redirect "/account"
 		else
@@ -68,7 +69,7 @@ class ApplicationController < Sinatra::Base
 
 			erb :account
 		else
-			redirect "/login"
+			redirect "/error/not-logged-in"
 		end
 	end
 
@@ -77,12 +78,19 @@ class ApplicationController < Sinatra::Base
 	end
 
 	helpers do
-	  def logged_in?
-		!!session[:user_id]
-	  end
+		def logged_in?
+			!!session[:user_id]
+		end
   
-	  def current_user
-		User.find(session[:user_id])
-	  end
+		def current_user
+			User.find(session[:user_id])
+		end
+	end
+
+	get '/logout' do
+		session.clear
+		@session = session
+	
+		redirect "/"
 	end
 end
