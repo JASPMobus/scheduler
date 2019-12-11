@@ -5,7 +5,7 @@ class ApplicationController < Sinatra::Base
 		set :layout, 'app/views/layout'
 		
 		enable :sessions
-		set :session_secret, SecureRandom.hex(20)
+		set :session_secret, "H8cZQHxgXjRxpPzEfmXi1MjwBujTe2dW"
 	end
 
 	get "/" do
@@ -63,9 +63,6 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/account" do
-		puts "Caught: #{session[:user_id]}"
-		puts session.keys
-
 		if logged_in?
 			@user = current_user
 
@@ -79,6 +76,23 @@ class ApplicationController < Sinatra::Base
 		erb :error
 	end
 
+	get '/logout' do
+		session.clear
+		@session = session
+	
+		redirect "/"
+	end
+
+	get "/users" do
+		if logged_in? && current_user.type="admin"
+			@users = User.all
+
+			erb :'users/index'
+		else
+			redirect "/error/not-logged-in-as-admin"
+		end
+	end
+
 	helpers do
 		def logged_in?
 			!!session[:user_id]
@@ -87,12 +101,5 @@ class ApplicationController < Sinatra::Base
 		def current_user
 			User.find(session[:user_id])
 		end
-	end
-
-	get '/logout' do
-		session.clear
-		@session = session
-	
-		redirect "/"
 	end
 end
