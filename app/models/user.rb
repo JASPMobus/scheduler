@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
+    #Stores passwords securely
     has_secure_password
 
+    #Checks that the passwords match and are of the proper format, and that the username isn't already taken.
     def self.can_create(params)
         if !acceptable_password?(params["password1"])
             return "bad-password"
@@ -11,18 +13,29 @@ class User < ActiveRecord::Base
         end
     end
 
+    #We don't have fields for notes or usertype, because the user can't choose these at creation
     def self.create(params)
+        #This is used to make sure we made the user object
         confirm = User.all.length
+        #Then we try to make it
         super
 
+        #Finally, if the user was made, we give it a type and empty notes
         if User.all.length > confirm
-            user = User.all.last
+            #selects the new user
+            user = User.all[-1]
             
+            #If it's the first user, automatically make it admin, otherwise it's just a base user.
             if User.all.length == 1
-                User.all[0].type = "admin"
+                user.type = "admin"
+            else
+                user.type = "user"
             end
             user.notes = ""
         end
+
+        #Save the user after updating it with the new fields
+        user.save
     end
 
     private
@@ -39,12 +52,15 @@ class User < ActiveRecord::Base
 
     #checks to see if any of the characters in chars is included in str
     def self.one_of_include?(str, chars)
+        #If there's no chars left to check, then none of the chars were in it
         if chars == []
             return false
+        #If the first char is in str, we're done
         elsif str.include?(chars[0])
             return true
         end
 
+        #Recursively calling the function after removing the first char
         chars.shift
         
         one_of_include?(str, chars)
