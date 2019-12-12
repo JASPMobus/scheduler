@@ -82,9 +82,9 @@ class ApplicationController < Sinatra::Base
 			@user = current_user
 
 			erb :account
-		#Otherwise, we alert the user to the problem
+		#Otherwise, we redirect them to the login page
 		else
-			redirect "/error/not-logged-in"
+			redirect "/login"
 		end
 	end
 
@@ -103,8 +103,6 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/users" do
-		puts current_user.kind
-
 		#Only admins can view the users page
 		if logged_in? && current_user.kind=="admin"
 			@users = User.all
@@ -114,6 +112,10 @@ class ApplicationController < Sinatra::Base
 		else
 			redirect "/error/not-logged-in-as-admin"
 		end
+	end
+
+	get "/users/:username" do
+		
 	end
 
 	helpers do
