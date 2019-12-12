@@ -103,8 +103,10 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/users" do
+		puts current_user.kind
+
 		#Only admins can view the users page
-		if logged_in? && current_user.type="admin"
+		if logged_in? && current_user.kind=="admin"
 			@users = User.all
 
 			erb :'users/index'

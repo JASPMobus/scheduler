@@ -27,9 +27,9 @@ class User < ActiveRecord::Base
             
             #If it's the first user, automatically make it admin, otherwise it's just a base user.
             if User.all.length == 1
-                user.type = "admin"
+                user.kind = "admin"
             else
-                user.type = "user"
+                user.kind = "user"
             end
             user.notes = ""
         end
