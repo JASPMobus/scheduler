@@ -1,4 +1,7 @@
+<h4>Name: <%= @user.full_name %></h4>
+<p>Username: <%= @user.username %></p>
+
 <% if @user.kind == "admin" %>
-    <a href="/users">View All Users</a>
+    <p><a href="/users">View All Users</a></p>
 <% end %>
-<a href="/logout">Log Out</a>
+<p><a href="/logout">Log Out</a></p>

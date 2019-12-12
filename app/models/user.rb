@@ -2,6 +2,11 @@ class User < ActiveRecord::Base
     #Stores passwords securely
     has_secure_password
 
+    #Returns the user's first and last names with a space in between as a string
+    def full_name
+        "#{self.first_name} #{self.last_name}"
+    end
+
     #Checks that the passwords match and are of the proper format, and that the username isn't already taken.
     def self.can_create(params)
         if !acceptable_password?(params["password1"])
