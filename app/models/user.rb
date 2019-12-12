@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
             else
                 user.kind = "user"
             end
-            user.notes = ""
+            user.notes = "None."
         end
 
         #Save the user after updating it with the new fields
