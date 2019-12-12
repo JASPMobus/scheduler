@@ -2,11 +2,11 @@ class User < ActiveRecord::Base
     has_secure_password
 
     def self.can_create(params)
-        if !acceptable_password?(params[:password1])
+        if !acceptable_password?(params["password1"])
             return "bad-password"
-        elsif params[:password1] != params[:password2]
+        elsif params[:password1] != params["password2"]
             return "password-confirmation"
-        elsif find_by(username: params[:username])
+        elsif find_by(username: params["username"])
             return "username-already-taken"
         end
     end

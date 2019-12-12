@@ -23,7 +23,7 @@ class ApplicationController < Sinatra::Base
 	post "/signup" do
 		check = User.can_create(params)
 
-		if check != String
+		if check.class != String
 			#getting rid of the redundant passwords now that we've confirmed them
 			params[:password] = params[:password1]
 			params.reject! { |k| k=="password1" }
