@@ -1,6 +1,6 @@
 <h4>Name: <%= @user.full_name %></h4>
 <p>Username: <%= @user.username %></p>
-
+<br>
 <% if @user.kind == "admin" %>
     <p><a href="/users">View All Users</a></p>
 <% end %>
