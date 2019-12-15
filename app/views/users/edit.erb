@@ -1,15 +1,18 @@
 <h4>Name: <%= @user.full_name %></h4>
 <p>Username: <%= @user.username %></p>
-<form action="/users/<%= @user.username %>" method="PATCH">
+<form action="/users/<%= @user.username %>" method="POST">
+<input id="hidden" type="hidden" name="_method" value="patch">
 <% if @viewer.kind == "admin" %>
-    <p>User Type: admin<input type=radio name=kind value=admin <% if @user.kind == "admin" %> checked <% end %>>
-    scheduler <input type=radio name=kind value=scheduler <% if @user.kind == "scheduler" %> checked <% end %>>
-    provider <input type=radio name=kind value=provider <% if @user.kind == "provider" %> checked <% end %>>
-    user<input type=radio name=kind value=user <% if @user.kind == "user" %> checked <% end %>></p>
+    <p>User Type:</p>
+    <p><input type=radio name=kind value=admin <% if @user.kind == "admin" %> checked <% end %>>admin<br>
+    <input type=radio name=kind value=scheduler <% if @user.kind == "scheduler" %> checked <% end %>>scheduler<br>
+    <input type=radio name=kind value=provider <% if @user.kind == "provider" %> checked <% end %>>provider<br>
+    <input type=radio name=kind value=user <% if @user.kind == "user" %> checked <% end %>>user</p>
 <% else %>
     <p>User Type: <%= @user.kind %>
 <% end %>
-<p>User Notes: <input type=text value=<%= @user.notes %>></p>
+<p>User Notes:</p>
+<p><textarea rows="4" cols="50" name=notes ><%= @user.notes %></textarea></p>
 <p><input type=submit value="I'm Done"> <input type=reset></p>
 </form>
 <br>

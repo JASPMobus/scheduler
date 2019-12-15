@@ -54,8 +54,20 @@ class UsersController < ApplicationController
 		#Finds the user
 		@user = User.find_by(username: params[:username])
 
-		@user.update(params)
+		#Then updates them
+		puts params
+		
+		kind = params["kind"]
+		notes = params["notes"]
 
-		redirect "/users/:username"
+		if kind 
+			@user.kind = kind
+		elsif notes
+			@user.notes = notes
+		end
+
+		@user.save
+
+		redirect "/users/#{@user.username}"
 	end
 end
