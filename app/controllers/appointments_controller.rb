@@ -8,7 +8,7 @@ class AppointmentsController < ApplicationController
 
     post "/appointments" do
         #checks that the input time is acceptable format
-        time_check = Temporal.acceptable_time?(params["time"])
+        time_check = Temporal.acceptable_time?(params)
 
         if time_check.class != "String"
             appointment = Appointment.create(params, current_user)
@@ -60,9 +60,9 @@ class AppointmentsController < ApplicationController
 		@appointment = Appointment.find(params[:id])
 
 		if logged_in? && current_user.kind!="user"
-			if @appointment
+            if @appointment
                 #checks that the input time is acceptable format
-                time_check = Temporal.acceptable_time?(params["time"])
+                time_check = Temporal.acceptable_time?(params, @appointment)
 
                 if time_check.class != "String"
                     #Then updates them

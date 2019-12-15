@@ -46,21 +46,24 @@ class User < ActiveRecord::Base
     end
 
     #Checks to see whether the user is busy at that given time, intended for provider appointment checks
-    def is_available?(datetime, duration)
+    def is_available?(datetime, duration, id = 0)
         #Do any appointments start during this time? Does this start during any of the appointments' times?
         appointments.each do |appointment|
-            #check if they're on the same day first
-            if datetime.to_date != appointment.start_time.to_date
-                return false
-            else
-                #now we know they're on the same day.
-                #query 1: does the old appointment start during the new one? 
-                q1 = Temporal.is_during_appointment?(appointment.start_time, datetime, appointment.duration)
+            #it doesn't matter if the conflict is with the appointment about to be changed.
+            if appointment.id != id
+                #check if they're on the same day first
+                if datetime.to_date != appointment.start_time.to_date
+                    return false
+                else
+                    #now we know they're on the same day.
+                    #query 1: does the old appointment start during the new one? 
+                    q1 = Temporal.is_during_appointment?(appointment.start_time, datetime, appointment.duration)
 
-                #query 2: does the new appointment start during the old one?
-                q2 = Temporal.is_during_appointment?(datetime, appointment.start_time, appointment.duration)
+                    #query 2: does the new appointment start during the old one?
+                    q2 = Temporal.is_during_appointment?(datetime, appointment.start_time, appointment.duration)
 
-                return !q1 && !q2
+                    return !q1 && !q2
+                end
             end
         end
     end
