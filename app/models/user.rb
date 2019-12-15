@@ -14,18 +14,22 @@ class User < ActiveRecord::Base
         last_name   = params["last_name"]
         username    = params["username"]
         kind        = params["kind"]
-		notes       = params["notes"]
-
+        notes       = params["notes"]
+        
         #Checks each one individually to see if it's in there. If it is, it updates.
 		if first_name
             self.first_name = first_name
-        elsif last_name
+        end
+        if last_name
             self.last_name = last_name
-        elsif username
+        end
+        if username
             self.username = username
-        elsif kind
+        end
+        if kind
             self.kind = kind
-		elsif notes
+        end
+        if notes
             self.notes = notes
         end
 
@@ -72,9 +76,9 @@ class User < ActiveRecord::Base
     private
 
     #used for self#acceptable_password?
-    LOWER = "a b c d e f g h i j k l m n o p q r s t u v w x y z".split(" ")
-    UPPER = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
-    NUMBER = "1 2 3 4 5 6 7 8 9 0".split(" ")
+    LOWER   = "a b c d e f g h i j k l m n o p q r s t u v w x y z".split(" ")
+    UPPER   = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ")
+    NUMBER  = "1 2 3 4 5 6 7 8 9 0".split(" ")
 
     #checks if the string has a lower case letter, an upper case letter, a number, and is at least 8 characters long
     def self.acceptable_password?(str)
