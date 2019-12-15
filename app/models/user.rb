@@ -74,6 +74,11 @@ class User < ActiveRecord::Base
         user.save
     end
 
+    #Checks to see if this user has an appointment at this time
+    def has_appointment?(time)
+        true
+    end
+
     private
 
     #used for self#acceptable_password?

@@ -12,7 +12,13 @@
         <tr>
         <th><%= "#{i/3 + 8}:#{i%3 * 2}0" %></th>
         <% @providers.each do |provider| %>
-            <td></td>
+            <% if provider.has_appointment?(i) %>
+                <% clr = "black" %>
+            <% else %>
+                <% clr = "white" %>
+            <% end %>
+            <td style="background-color:<%= clr %>">
+            </td>
         <% end %>
         </tr>
     <% end %>
