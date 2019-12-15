@@ -1,6 +1,6 @@
 class Temporal
     #checks that the provided time is acceptable
-    def self.acceptable_time?(params, appointment = null)
+    def self.acceptable_time?(params, user, appointment = nil)
         time_split = params["time"].split(":")
 
         #makes sure that the time part is a good format.
@@ -11,11 +11,11 @@ class Temporal
             datetime = Temporal.generate_datetime(params["date"], params["time"])
 
             if appointment
-                if !appointment.user.is_available?(datetime, params["duration"], appointment.id)
+                if !user.is_available?(datetime, params["duration"], appointment.id)
                     return "time-unavailable"
                 end 
             else
-                if !User.find(params["user_id"]).is_available?(datetime, params)
+                if !user.is_available?(datetime, params)
                     return "time-unavailable"
                 end
             end
