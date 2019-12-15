@@ -27,14 +27,18 @@ class AccountController < ApplicationController
         end
     end
 
-	patch "/account" do
-		#Finds the user
-		@user = User.find_by(username: params[:username])
+    patch "/account" do
+        if User.username_not_taken?(params["username"])
+            #Finds the user
+            @user = User.find_by(username: params[:username])
 
-        #Then updates them
-		@user.update(params)
+            #Then updates them
+            @user.update(params)
 
-        #Then goes back to their account
-		redirect "/account"
+            #Then goes back to their account
+            redirect "/account"
+        else
+            redirect "/error/username-already-taken"
+        end
 	end
 end

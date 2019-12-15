@@ -39,9 +39,14 @@ class User < ActiveRecord::Base
             return "bad-password"
         elsif params[:password1] != params["password2"]
             return "password-confirmation"
-        elsif find_by(username: params["username"])
+        elsif username_not_taken?(params["username"])
             return "username-already-taken"
         end
+    end
+
+    #Check to see if the username is already taken
+    def self.username_not_taken?(username)
+        !find_by(username: username)
     end
 
     #We don't have fields for notes or usertype, because the user can't choose these at creation
