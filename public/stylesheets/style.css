@@ -10,6 +10,7 @@
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 20px;
   text-align: center;
+  font-family: arial, serif;
 }
 
 /* The navigation menu links */
@@ -30,6 +31,7 @@
 .bg {
   background-color: #505050;
   padding-left: 170px; /* Should be same as sidebar width + sidebar padding*/
+  font-family: arial, serif;
 }
 
 /* Links in the main body of the pages */
@@ -51,4 +53,20 @@ td, th {
   border: 1px solid #000000;
   text-align: center;
   padding: 8px;
+}
+
+/* Make buttons look like links */
+input.submit {
+  background: none!important;
+  font-size: 16px;
+  font-family: arial, serif;
+  border: none;
+  padding: 0!important;
+  color: #FFFFFF;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+input.submit:hover {
+  color: #FF5050
 }

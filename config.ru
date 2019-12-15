@@ -6,3 +6,4 @@ run ApplicationController
 use UsersController
 use AccountController
 use ScheduleController
+use AppointmentsController

@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
     #Stores passwords securely
     has_secure_password
 
+    #has appointments
+    has_many :appointments
+
     #Returns the user's first and last names with a space in between as a string
     def full_name
         "#{self.first_name} #{self.last_name}"

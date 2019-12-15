@@ -4,8 +4,9 @@
     <p>User Type: <%= @user.kind %></p>
     <p>User Notes: <%= @user.notes %></p>
     <br>
-    <p><a href="/users">View All Users</a></p>
+    <p><a href="/users">View All Users</a> | <a href="/account/appointments">View Your Appointments</a></p>
 <% else %>
     <br>
+    <p><a href="/account/appointments">View Your Appointments</a></p>
 <% end %>
 <p><a href="/account/edit">Edit Your Account</a> | <a href="/logout">Log Out</a></p>

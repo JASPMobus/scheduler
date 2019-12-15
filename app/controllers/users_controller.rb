@@ -14,14 +14,14 @@ class UsersController < ApplicationController
     get "/users/:username" do
 		#Only employees can view the users page
 		if logged_in? && current_user.kind!="user"
-        #Finds the user
-		@user = User.find_by(username: params[:username])
+			#Finds the user	
+			@user = User.find_by(username: params[:username])
 
-        if @user
-            erb :'users/user'
-        else
-            redirect "/error/invalid-user-selected"
-        end 
+			if @user
+				erb :'users/user'
+			else
+				redirect "/error/user-not-found"
+			end 
 		#If you aren't logged in as an admin, you can't view it
 		else
 			redirect "/error/lacking-privileges"
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 			if @user
 				erb :'users/edit'
 			else
-				redirect "/error/invalid-user-selected"
+				redirect "/error/user-not-found"
 			end 
 			#If you aren't logged in as an admin, you can't view it
 		else
@@ -50,10 +50,35 @@ class UsersController < ApplicationController
 		#Finds the user
 		@user = User.find_by(username: params[:username])
 
-		#Then updates them
-		@user.update(params)
+		if logged_in? && current_user.kind!="user"
+			if @user
+				#Then updates them
+				@user.update(params)
 
-		#Then returns to their user view page
-		redirect "/users/#{@user.username}"
+				#Then returns to their user view page
+				redirect "/users/#{@user.username}"
+			else
+				redirect "/error/user-not-found"
+			end
+		else 
+			redirect "/error/lacking-privileges"
+		end
+	end
+
+	delete "/users/:username" do
+		#Finds the user
+		@user = User.find_by(username: params[:username])
+
+		if logged_in? && current_user.kind!="user"
+			if @user
+				@user.delete
+
+				redirect "/users"
+			else
+				redirect "/error/user-not-found"
+			end
+		else
+			redirect "/error/lacking-privileges"
+		end 
 	end
 end

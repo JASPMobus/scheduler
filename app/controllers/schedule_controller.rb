@@ -1,5 +1,5 @@
 class ScheduleController < ApplicationController
-		get "/schedule" do
+	get "/schedule" do
 		#grabs all of the providers
 		@providers = User.all.filter { |user| user.kind == "provider" }
 
