@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
        #Grabs all of the info
         first_name  = params["first_name"]
         last_name   = params["last_name"]
-        username    = params["username"]
         kind        = params["kind"]
         notes       = params["notes"]
         
@@ -22,9 +21,6 @@ class User < ActiveRecord::Base
         end
         if last_name
             self.last_name = last_name
-        end
-        if username
-            self.username = username
         end
         if kind
             self.kind = kind

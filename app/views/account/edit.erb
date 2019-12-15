@@ -2,8 +2,7 @@
 <input id="hidden" type="hidden" name="_method" value="patch">
 <p>Name:</p>
 <p><input type=text name=first_name value=<%= @user.first_name %>><input type=text name=last_name value=<%= @user.last_name %>></p>
-<p>Username:</p>
-<p><input type=text name=username value=<%= @user.username %>></p>
+<p>Username: <%= @user.username %></p>
 <% if @user.kind == "admin" %>
     <p>User Type:</p>
     <p><input type=radio name=kind value=admin <% if @user.kind == "admin" %> checked <% end %>>admin<br>
