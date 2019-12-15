@@ -7,15 +7,22 @@ class AppointmentsController < ApplicationController
     end
 
     post "/appointments" do
-        puts params
+        #checks that the input time is acceptable format
+        time_check = Temporal.acceptable_time?(params["time"])
 
-        redirect "/appointments"
+        if time_check.class != "String"
+            appointment = Appointment.create(params, current_user)
+    
+            redirect "/appointments"
+        else
+            redirect "/error/#{time_check}"
+        end
     end
 
     get "/appointments" do
         if logged_in? && current_user.kind!="user"
             @appointments = Appointment.all
-            
+
             erb :'appointments/index'  
         else
             redirect "/error/lacking-privileges"

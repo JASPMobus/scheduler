@@ -10,6 +10,15 @@ class User < ActiveRecord::Base
         "#{self.first_name} #{self.last_name}"
     end
 
+    #Adds in any appointments that this user is the provider for
+    def appointments
+        pre_providing = super
+
+        providing = Appointments.all.filter { |appointment| appointment.provider_id = self.id }
+
+        pre_providing + providing
+    end
+
     #Updates the user
     def update(params)
        #Grabs all of the info

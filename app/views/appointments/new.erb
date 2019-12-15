@@ -2,7 +2,7 @@
     <p></p>
     <p>With Whom:</p>
     <% @providers.each do |provider| %>
-        <p><input type=radio name=provider value=<%= provider.full_name %>><%= provider.full_name %></p>
+        <p><input type=radio name=provider value=<%= provider.id %>><%= provider.full_name %></p>
     <% end %>
     <p>Date: <input type=date name=date></p>
     <p>Start Time: <input type=text name=time></p>
