@@ -43,20 +43,39 @@ class AppointmentsController < ApplicationController
         end
     end
 
+    get "/appointments/:id/edit" do
+        if logged_in? && current_user.kind!="user"
+            @user = current_user
+            @providers = User.all.filter { |user| user.kind == "provider" }
+            @appointment = Appointment.find(params[:id])
+
+            erb :'appointments/edit'
+        else
+            redirect "/error/lacking-privileges"
+        end
+    end
+
     patch "/appointments/:id" do
 		#Finds the appointment
 		@appointment = Appointment.find(params[:id])
 
 		if logged_in? && current_user.kind!="user"
-			if @user
-				#Then updates them
-				@user.update(params)
+			if @appointment
+                #checks that the input time is acceptable format
+                time_check = Temporal.acceptable_time?(params["time"])
 
-				#Then returns to their user view page
-				redirect "/appointments/:id"
-			else
-				redirect "/error/user-not-found"
-			end
+                if time_check.class != "String"
+                    #Then updates them
+                    @appointment.update(params)
+
+                    #Then returns to their user view page
+                    redirect "/appointments/#{params[:id]}"
+                else
+                    redirect "/error/#{time-check}"
+                end
+            else 
+                redirect "/error/appointment-not-found"
+            end
 		else 
 			redirect "/error/lacking-privileges"
 		end

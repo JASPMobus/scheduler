@@ -1,8 +1,9 @@
 <p>Client Name: <%= @appointment.user.full_name %></p>
-<p>Provider Name: <%= @appointment.provider %></p>
+<p>Provider Name: <%= @appointment.provider.full_name %></p>
 <p>Date: <%= @appointment.start_time.strftime("%A, %b %d") %></p>
-<p>Time: <%= @appointment.start_time.strftime("%I:%M %p") %></p> 
+<p>Time: <%= @appointment.start_time.strftime("%l:%M") %></p> 
 <p>Duration: <%= @appointment.duration %> minutes</p>
+<p>Notes: <%= @appointment.notes %></p>
 <br>
 <form action="/appointments/<%= @appointment.id %>" method="POST">
 <input id="hidden" type="hidden" name="_method" value="DELETE">

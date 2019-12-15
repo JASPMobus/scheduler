@@ -1,0 +1,24 @@
+<form action="/appointments/<%= @appointment.id %>" method="POST">
+<input id="hidden" type="hidden" name="_method" value="PATCH">
+<p>Client Name: <%= @appointment.user.full_name %></p>
+<% if @user.kind=="scheduler" || @user.kind=="admin" %>
+    <p>Provider Name:</p>
+    <%= @appointment.provider %></p>
+    <% @providers.each do |provider| %>
+        <p><input type=radio name=provider_id value=<%= provider.id %>><%= "#{provider.full_name}" %></p>
+    <% end %>
+    <p>Date: <input type=date name=date value="%Y-%m-%d"></p>
+    <p>Time: <input type=text name=time value=<%= @appointment.start_time.strftime("%I:%M %p") %>></p>
+    <p>Duration: <input type=number min=20 step=20 name=duration value=<%= @appointment.duration%>></p>
+<% else %>
+    <p>Provider Name: <%= @appointment.provider %></p>
+    <p>Date: <%= @appointment.start_time.strftime("%A, %b %d") %></p>
+    <p>Time: <%= @appointment.start_time.strftime("%l:%M") %></p>
+    <p>Duration: <%= @appointment.duration %> minutes</p>
+<% end %>
+<p>Appointment Notes:</p>
+<p><textarea rows="4" cols="50" name=notes><%= @appointment.notes %></textarea></p>
+<p><input type=submit value="I'm Done"> <input type=reset></p>
+</form>
+<br>
+<p><a href="/appointments">View All Appointments</a></p>

@@ -23,11 +23,11 @@ class Appointment < ActiveRecord::Base
         #t.integer "duration"
 
         #grabbing the values
-        start_time = Temporal.generate_datetime(params["date"], params["time"])
-        notes = "" #notes always start empty
-        user_id = user.id
+        start_time  = Temporal.generate_datetime(params["date"], params["time"])
+        notes       = "" #notes always start empty
+        user_id     = user.id
         provider_id = params["provider_id"]
-        duration = params["duration"]
+        duration    = params["duration"]
 
         #creating the appointment and giving it the values above
         appointment = Appointment.new
@@ -41,5 +41,31 @@ class Appointment < ActiveRecord::Base
         puts appointment 
 
         appointment.save
+    end
+
+    #Updates the user
+    def update(params)
+        #Grabs all of the info
+        start_time  = Temporal.generate_datetime(params["date"], params["time"])
+        notes       = params["notes"]
+        provider_id = params["provider_id"]
+        duration    = params["duration"]
+        
+        #Checks each one individually to see if it's in there. If it is, it updates.
+        if start_time
+            self.start_time = start_time
+        end
+        if notes
+            self.notes = notes
+        end
+        if provider_id
+            self.provider_id = provider_id
+        end
+        if duration
+            self.duration = duration
+        end
+
+        #Then we save at the end to store the changes.
+        self.save
     end
 end

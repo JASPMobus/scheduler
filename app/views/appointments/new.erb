@@ -1,7 +1,7 @@
 <form action="/appointments" method="POST">
     <p>With Whom:</p>
     <% @providers.each do |provider| %>
-        <p><input type=radio name=provider_id value=<%= provider.id %>><%= "#{provider.full_name}, id #{provider.id}" %></p>
+        <p><input type=radio name=provider_id value=<%= provider.id %>><%= "#{provider.full_name}" %></p>
     <% end %>
     <p>Date: <input type=date name=date></p>
     <p>Start Time: <input type=text name=time></p>
