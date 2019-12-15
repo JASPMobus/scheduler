@@ -1,20 +1,7 @@
 <% if @appointments != [] %>
-    <table>
-        <tr>
-        <th>Time</th>
-        <% @appointments.each do |appointment| %>
-            <th><%= appointment.provider.full_name %></th>
-        <% end %>
-        </tr>
-        <% 25.times do |i| %>
-            <% if i>= 12 %> 
-                <% i += 3 %>
-            <% end %>
-            <tr>
-            <th><%= "#{i/3 + 8}:#{i%3 * 2}0" %></th>
-            </tr>
-        <% end %>
-    </table>
+    <% @appointments.each do |appointment| %>
+        <%= @appointment.class %>    
+    <% end %>
 <% else %>
     You do not have any appointments. Would you like to <a href="/schedule">schedule</a> one?
 <% end %>

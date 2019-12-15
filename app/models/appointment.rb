@@ -30,6 +30,8 @@ class Appointment < ActiveRecord::Base
         appointment.provider_id = provider_id
         appointment.duration = duration
 
+        puts appointment 
+        
         appointment.save
     end
 end

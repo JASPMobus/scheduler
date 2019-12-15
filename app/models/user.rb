@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
     def appointments
         pre_providing = super
 
-        providing = Appointments.all.filter { |appointment| appointment.provider_id = self.id }
+        providing = Appointment.all.filter { |appointment| appointment.provider_id = self.id }
 
         pre_providing + providing
     end
