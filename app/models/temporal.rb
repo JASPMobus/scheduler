@@ -25,4 +25,31 @@ class Temporal
 
         DateTime.new(year, month, day, hour, minute, 0)
     end
+
+    #checks if time2 is within duration of time1
+    def self.is_during_appointment?(time1, time2, duration)
+        start = comparatize(time1.strftime("%k:%M"))
+        check = comparatize(time2.strftime("%k:%M"))
+        finish = time_after_x_minutes(start, duration)
+
+        start <= check && check <= finish
+    end
+
+    private
+
+    #turns a time into a decimal
+    def self.comparatize(time)
+        #time is of form HH:MM, 24 hour clock, no padding on hour
+        time_split = time.split(":")
+
+        time_ret = time_split[0].to_f
+        minutes = time_split[1].to_f/60
+
+        time_ret + minutes
+    end
+
+    #adds x minutes to the given time (previously comparatized)
+    def self.time_after_x_minutes(time, x)
+        comparatize("#{time}:#{x}")
+    end
 end

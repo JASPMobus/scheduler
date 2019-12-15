@@ -45,6 +45,26 @@ class User < ActiveRecord::Base
         self.save
     end
 
+    #Checks to see whether the user is busy at that given time, intended for provider appointment checks
+    def is_available?(datetime, duration)
+        #Do any appointments start during this time? Does this start during any of the appointments' times?
+        appointments.each do |appointment|
+            #check if they're on the same day first
+            if datetime.to_date != appointment.start_time.to_date
+                return false
+            else
+                #now we know they're on the same day.
+                #query 1: does the old appointment start during the new one? 
+                q1 = Temporal.is_during_appointment?(appointment.start_time, datetime, appointment.duration)
+
+                #query 2: does the new appointment start during the old one?
+                q2 = Temporal.is_during_appointment?(datetime, appointment.start_time, appointment.duration)
+
+                return !q1 && !q2
+            end
+        end
+    end
+
     #Checks that the passwords match and are of the proper format, and that the username isn't already taken.
     def self.can_create(params)
         if !acceptable_password?(params["password1"])
