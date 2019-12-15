@@ -3,9 +3,8 @@
 <p>Client Name: <%= @appointment.user.full_name %></p>
 <% if @user.kind=="scheduler" || @user.kind=="admin" %>
     <p>Provider Name:</p>
-    <%= @appointment.provider %></p>
     <% @providers.each do |provider| %>
-        <p><input type=radio name=provider_id value=<%= provider.id %>><%= "#{provider.full_name}" %></p>
+        <p><input type=radio name=provider_id value=<%= provider.id %> <% if provider.id == @appointment.provider_id %> checked <% end %>><%= "#{provider.full_name}" %></p>
     <% end %>
     <p>Date: <input type=date name=date value="%Y-%m-%d"></p>
     <p>Time: <input type=text name=time value=<%= @appointment.start_time.strftime("%l:%M") %>></p>

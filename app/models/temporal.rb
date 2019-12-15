@@ -6,16 +6,16 @@ class Temporal
         #makes sure that the time part is a good format.
         if time_split.length!=2 || time_split[0].length>2 || time_split[1].length!=2 || time_split[0].to_i > 24 || time_split[1].to_i > 60
             return "incorrect-time-format"
-        #checks if the user is busy during the appointment.
+        #checks if the user or the provider are busy during the appointment.
         else
             datetime = Temporal.generate_datetime(params["date"], params["time"])
 
             if appointment
-                if !user.is_available?(datetime, params["duration"], appointment.id)
+                if !user.is_available?(datetime, params["duration"], appointment.id) || !User.find(params["provider_id"]).is_available?(datetime, params["duration"], appointment.id)
                     return "time-unavailable"
                 end 
             else
-                if !user.is_available?(datetime, params)
+                if !user.is_available?(datetime, params) || !User.find(params["provider_id"]).is_available?(datetime, params["duration"], appointment.id)
                     return "time-unavailable"
                 end
             end

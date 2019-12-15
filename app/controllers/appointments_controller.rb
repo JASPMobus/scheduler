@@ -10,7 +10,7 @@ class AppointmentsController < ApplicationController
         #checks that the input time is acceptable format
         time_check = Temporal.acceptable_time?(params, current_user)
 
-        if time_check.class != "String"
+        if time_check.class != String
             appointment = Appointment.create(params, current_user)
     
             redirect "/appointments"
@@ -63,15 +63,16 @@ class AppointmentsController < ApplicationController
             if @appointment
                 #checks that the input time is acceptable format
                 time_check = Temporal.acceptable_time?(params, @appointment.user, @appointment)
+                puts time_check
 
-                if time_check.class != "String"
+                if time_check.class != String
                     #Then updates them
                     @appointment.update(params)
 
                     #Then returns to their user view page
                     redirect "/appointments/#{params[:id]}"
                 else
-                    redirect "/error/#{time-check}"
+                    redirect "/error/#{time_check}"
                 end
             else 
                 redirect "/error/appointment-not-found"
