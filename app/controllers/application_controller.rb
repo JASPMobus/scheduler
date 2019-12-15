@@ -2,6 +2,7 @@ class ApplicationController < Sinatra::Base
 	configure do
 		set :views, 'app/views'
 		set :public_folder, 'public'
+		set :layout, 'app/views/layout'
 		
 		enable :sessions
 		set :session_secret, "H8cZQHxgXjRxpPzEfmXi1MjwBujTe2dW"
@@ -75,18 +76,6 @@ class ApplicationController < Sinatra::Base
 		end
 	end
 
-	get "/account" do
-		#If you're logged in, we store your info and go to the user page
-		if logged_in?
-			@user = current_user
-
-			erb :account
-		#Otherwise, we redirect them to the login page
-		else
-			redirect "/login"
-		end
-	end
-
 	get "/error/:error" do 
 		#The error page
 		erb :error
@@ -99,22 +88,6 @@ class ApplicationController < Sinatra::Base
 
 		#Go to the home page afterwards
 		redirect "/"
-	end
-
-	get "/users" do
-		#Only admins can view the users page
-		if logged_in? && current_user.kind=="admin"
-			@users = User.all
-
-			erb :'users/index'
-		#If you aren't logged in as an admin, you can't view it
-		else
-			redirect "/error/not-logged-in-as-admin"
-		end
-	end
-
-	get "/users/:username" do
-		
 	end
 
 	helpers do

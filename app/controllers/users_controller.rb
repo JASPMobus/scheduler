@@ -1,8 +1,4 @@
 class UsersController < ApplicationController
-	configure do
-		set :layout, 'app/views/layout'
-	end
-
 	get "/users" do
 		#Only employees can view the users page
 		if logged_in? && current_user.kind!="user"
@@ -55,19 +51,9 @@ class UsersController < ApplicationController
 		@user = User.find_by(username: params[:username])
 
 		#Then updates them
-		puts params
-		
-		kind = params["kind"]
-		notes = params["notes"]
+		@user.update(params)
 
-		if kind 
-			@user.kind = kind
-		elsif notes
-			@user.notes = notes
-		end
-
-		@user.save
-
+		#Then returns to their user view page
 		redirect "/users/#{@user.username}"
 	end
 end

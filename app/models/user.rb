@@ -7,6 +7,32 @@ class User < ActiveRecord::Base
         "#{self.first_name} #{self.last_name}"
     end
 
+    #Updates the user
+    def update(params)
+       #Grabs all of the info
+        first_name  = params["first_name"]
+        last_name   = params["last_name"]
+        username    = params["username"]
+        kind        = params["kind"]
+		notes       = params["notes"]
+
+        #Checks each one individually to see if it's in there. If it is, it updates.
+		if first_name
+            self.first_name = first_name
+        elsif last_name
+            self.last_name = last_name
+        elsif username
+            self.username = username
+        elsif kind
+            self.kind = kind
+		elsif notes
+            self.notes = notes
+        end
+
+        #Then we save at the end to store the changes.
+        self.save
+    end
+
     #Checks that the passwords match and are of the proper format, and that the username isn't already taken.
     def self.can_create(params)
         if !acceptable_password?(params["password1"])
