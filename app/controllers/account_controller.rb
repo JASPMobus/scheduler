@@ -1,9 +1,5 @@
 class AccountController < ApplicationController
-	configure do
-		set :layout, 'app/views/layout'
-    end
-
-    get "/account" do
+        get "/account" do
 		#If you're logged in, we store your info and go to the user page
 		if logged_in?
 			@user = current_user
