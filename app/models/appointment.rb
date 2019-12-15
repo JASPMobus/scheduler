@@ -3,7 +3,15 @@ class Appointment < ActiveRecord::Base
     has_many :services
 
     def provider
-        User.find(self.provider_id)
+        if self.provider_id
+            User.find(self.provider_id)
+        else 
+            User.find(1)
+        end
+    end
+
+    def user
+        User.find(self.user_id)
     end
 
     def self.create(params, user)
@@ -31,7 +39,7 @@ class Appointment < ActiveRecord::Base
         appointment.duration = duration
 
         puts appointment 
-        
+
         appointment.save
     end
 end
