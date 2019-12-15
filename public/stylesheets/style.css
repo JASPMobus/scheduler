@@ -1,33 +1,43 @@
 /* The sidebar menu */
 .sidebar {
-    height: 100%;
-    width: 160px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #000000; /* Black */
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 20px;
-    text-align: center;
-  }
+  height: 100%;
+  width: 160px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #000000;
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+  text-align: center;
+}
 
 /* The navigation menu links */
 .sidebar a {
-    padding: 10px;
-    font-size: 20px;
-    color: #FFFFFF;
-    display: block;
-  }
-  
-  /* When you mouse over the navigation links, change their color */
-  .sidebar a:hover {
-    color: #FFFFFF;
-    background-color:#505050
-  }
-  
-  /* Background */
-  .bg {
-    background-color: #505050;
-    padding-left: 170px; /* Should be same as sidebar width + sidebar padding*/
-  }
+  padding: 10px;
+  font-size: 20px;
+  color: #FFFFFF;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change the text and background colors */
+.sidebar a:hover {
+  color: #FF5050
+  background-color:#505050
+}
+
+/* Background */
+.bg {
+  background-color: #505050;
+  padding-left: 170px; /* Should be same as sidebar width + sidebar padding*/
+}
+
+/* Links in the main body of the pages */
+.bg a {
+  color: #FFFFFF
+}
+
+/* When you mouse over the navigation links, change their color */
+.bg a:hover {
+  color: #FF5050
+}
