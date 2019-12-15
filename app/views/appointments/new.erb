@@ -1,9 +1,11 @@
-<form>
+<form action="/appointments" method="POST">
     <p></p>
     <p>With Whom:</p>
-    <% @providers.each
+    <% @providers.each do |provider| %>
+        <p><input type=radio name=provider value=<%= provider.full_name %>><%= provider.full_name %></p>
+    <% end %>
     <p>Date: <input type=date name=date></p>
     <p>Start Time: <input type=text name=time></p>
-    <p>Duration: <input type=number min=20 name=duration></p>
+    <p>Duration: <input type=number min=20 step=20 name=duration></p>
     <p><input type=submit value="Book This Appointment"></p>
 </form>
