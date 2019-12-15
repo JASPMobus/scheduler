@@ -22,8 +22,8 @@
 
 /* When you mouse over the navigation links, change the text and background colors */
 .sidebar a:hover {
-  color: #FF5050
-  background-color:#505050
+  color: #FF5050;
+  background-color: #505050;
 }
 
 /* Background */
@@ -40,4 +40,15 @@
 /* When you mouse over the navigation links, change their color */
 .bg a:hover {
   color: #FF5050
+}
+
+/* Tables stuff */
+table {
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #000000;
+  text-align: center;
+  padding: 8px;
 }
