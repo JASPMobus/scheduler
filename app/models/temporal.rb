@@ -2,10 +2,16 @@ class Temporal
     #checks that the provided time is acceptable
     def self.acceptable_time?(params, user, appointment = nil)
         time_split = params["time"].split(":")
+        date_split = params["date"].split("-")
 
         #makes sure that the time part is a good format.
-        if time_split.length!=2 || time_split[0].length>2 || time_split[1].length!=2 || time_split[0].to_i > 24 || time_split[1].to_i > 60
+        if time_split.length!=2 || time_split[0].length>2 || time_split[1].length!=2 || !are_numeric?(time_split) || time_split[0].to_i > 24 || time_split[1].to_i > 60
             return "incorrect-time-format"
+
+        #makes sure that the date part is a good format
+        elsif date_split.length!=3 || !are_numeric?(date_split)
+            return "incorrect-date-format"
+
         #checks if the user or the provider are busy during the appointment.
         else
             datetime = Temporal.generate_datetime(params["date"], params["time"])
@@ -15,7 +21,7 @@ class Temporal
                     return "time-unavailable"
                 end 
             else
-                if !user.is_available?(datetime, params) || !User.find(params["provider_id"]).is_available?(datetime, params["duration"], appointment.id)
+                if !user.is_available?(datetime, params) || !User.find(params["provider_id"]).is_available?(datetime, params["duration"])
                     return "time-unavailable"
                 end
             end
@@ -46,8 +52,9 @@ class Temporal
         start = comparatize(time1.strftime("%k:%M"))
         check = comparatize(time2.strftime("%k:%M"))
         finish = time_after_x_minutes(start, duration)
+        midpoint = (start+finish)/2
 
-        start <= check && check <= finish
+        start <= check && check < finish
     end
 
     private
@@ -66,5 +73,20 @@ class Temporal
     #adds x minutes to the given time (previously comparatized)
     def self.time_after_x_minutes(time, x)
         comparatize("#{time}:#{x}")
+    end
+
+    #checks if a string is numeric
+    def self.is_numeric?(str)
+        Float(str) != nil rescue false
+    end
+
+    def self.are_numeric?(strs)
+        strs.each do |str|
+            if !is_numeric?(str)
+                return false 
+            end 
+        end 
+
+        return true
     end
 end

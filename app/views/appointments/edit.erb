@@ -6,7 +6,7 @@
     <% @providers.each do |provider| %>
         <p><input type=radio name=provider_id value=<%= provider.id %> <% if provider.id == @appointment.provider_id %> checked <% end %>><%= "#{provider.full_name}" %></p>
     <% end %>
-    <p>Date: <input type=date name=date value="%Y-%m-%d"></p>
+    <p>Date: <input type=date name=date value=<%= @appointment.start_time.strftime("%Y-%m-%d") %>></p>
     <p>Time: <input type=text name=time value=<%= @appointment.start_time.strftime("%l:%M") %>></p>
     <p>Duration: <input type=number min=20 step=20 name=duration value=<%= @appointment.duration%>></p>
 <% else %>
