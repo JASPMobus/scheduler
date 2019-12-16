@@ -1,24 +1,5 @@
 class Service < ActiveRecord::Base 
-    belongs_to :appointment
-    
-    #A setter method added for readability
-    def alter_fee(new_fee)
-        self.price = new_fee
-    end
-
-    def self.create(params, standard = true)
-        service = super(params)
-
-        service.standard = standard
-
-        if standard
-            service.appointment_id = 0;
-        end
-
-        service.save
-
-        service
-    end
+    belongs_to :appointment_id
 
     def self.clone(service, appointment_id)
         new_service = Service.new
@@ -27,7 +8,6 @@ class Service < ActiveRecord::Base
         new_service.price           = service.price
         new_service.description     = service.description
         new_service.appointment_id  = appointment_id
-        new_service.standard        = false
 
         new_service.save
     end
@@ -37,11 +17,9 @@ class Service < ActiveRecord::Base
             id = id.to_i
             amount = amount.to_i
 
-            puts "id: #{id}, amount: #{amount}"
-
             service = Service.find(id.to_i)
             
-            already_made        = Service.all.filter { |check| !service.standard && check.name==service.name && check.appointment_id==appointment_id  }
+            already_made        = Service.all.filter { |check| check.name==service.name && check.appointment_id==appointment_id  }
             already_made_amount = already_made.length
 
             if amount < already_made_amount

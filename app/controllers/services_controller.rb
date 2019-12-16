@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
     get "/services" do
         if logged_in? && current_user.kind!="user"
-            @services = Service.all.filter { |service| service.standard }
+            @services = StandardService.all
 
             erb :'services/index'
         else
@@ -18,14 +18,14 @@ class ServicesController < ApplicationController
     end
 
     post "/services" do
-        service = Service.create(params)
+        service = StandardService.create(params)
 
         redirect "/services/#{service.id}"
     end
 
     get "/services/:id" do
         if logged_in? && current_user.kind!="user"
-            @service = Service.find(params[:id])
+            @service =StandardService.find(params[:id])
 
             if @service
                 erb :'services/service'
@@ -39,7 +39,7 @@ class ServicesController < ApplicationController
 
     get "/services/:id/edit" do
         if logged_in? && current_user.kind=="admin"
-            @service = Service.find(params[:id])
+            @service =StandardService.find(params[:id])
 
             if @service
                 erb :'services/edit'
@@ -52,7 +52,7 @@ class ServicesController < ApplicationController
     end
 
     patch "/services/:id" do 
-        @service = Service.find(params[:id])
+        @service =StandardService.find(params[:id])
 
         if @service
             @service.update(params)
@@ -65,7 +65,7 @@ class ServicesController < ApplicationController
 
     delete "/services/:id" do
 		#Finds the service
-		@service = Service.find(params[:id])
+		@service =StandardService.find(params[:id])
 
 		if logged_in? && current_user.kind=="admin"
 			if @service
