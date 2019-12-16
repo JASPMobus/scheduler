@@ -5,12 +5,16 @@ class Temporal
         date_split.length!=3 || !are_numeric?(date_split)
     end
 
+    def self.check_time(time)
+        time_split = time.split(":")
+
+        time_split.length!=2 || time_split[0].length>2 || time_split[1].length!=2 || !are_numeric?(time_split) || time_split[0].to_i > 24 || time_split[1].to_i > 60
+    end
+
     #checks that the provided time is acceptable
     def self.acceptable_time?(params, user, appointment = nil)
-        time_split = params["time"].split(":")
-
         #makes sure that the time part is a good format.
-        if time_split.length!=2 || time_split[0].length>2 || time_split[1].length!=2 || !are_numeric?(time_split) || time_split[0].to_i > 24 || time_split[1].to_i > 60
+        if check_time(params["time"])
             return "incorrect-time-format"
 
         #makes sure that the date part is a good format
