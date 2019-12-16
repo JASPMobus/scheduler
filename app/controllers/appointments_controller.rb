@@ -56,6 +56,29 @@ class AppointmentsController < ApplicationController
             redirect "/error/lacking-privileges"
         end
     end
+    
+	get "/appointments/schedule" do
+		#grabs all of the providers and the date
+		@providers = User.all.filter { |user| user.kind == "provider" }
+		@date = Date.today
+
+		#The schedule page
+		erb :'appointments/schedule'
+	end
+
+	get "/appointments/schedule/:date" do
+		check_date = Temporal.check_date(params[:date])
+		if check_date.class != String
+			#grabs all of the providers and the date
+			@providers = User.all.filter { |user| user.kind == "provider" }
+			@date = Date.parse(params["date"])
+
+			erb :'appointments/schedule'
+
+		else 
+			redirect "/error/#{check_date}"
+		end 
+	end
 
     get "/appointments/:id" do
         @appointment = Appointment.find(params[:id])
