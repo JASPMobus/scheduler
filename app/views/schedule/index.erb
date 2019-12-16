@@ -13,11 +13,14 @@
         <th><%= time=Temporal.iter_to_time(i) %></th>
         <% @providers.each do |provider| %>
             <% if provider.has_appointment?(@date.strftime("%Y-%m-%d"), time) %>
-                <% clr = "black" %>
+                <% clr = "#000000" %>
             <% else %>
-                <% clr = "white" %>
+                <% clr = "#808080" %>
             <% end %>
-            <td style="background-color:<%= clr %>">
+            <td style="background-color:<%= clr %>;">
+                <% if clr != "#000000" %>
+                    <a href="/appointments/new/<%= "#{@date.strftime("%Y-%m-%d")}-#{time}" %>">Book</a>
+                <% end %>
             </td>
         <% end %>
         </tr>
