@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 	get "/users" do
 		#Only employees can view the users page
 		if logged_in? && current_user.kind!="user"
-			@users = User.all
+			@users = User.all.sort { |u1, u2| u1.full_name <=> u2.full_name }
 
 			erb :'users/index'
 		#If you aren't logged in as an admin, you can't view it

@@ -164,7 +164,7 @@ class AppointmentsController < ApplicationController
             if @user.kind=="provider" && @appointment.provider!=@user && @appointment.user!=@user
                 redirect "/appointments"
             else 
-                @services = Service.all
+                @services = Service.all.sort { |s1, s2| s1.name <=> s2.name }
 
                 erb :'appointments/services'
             end

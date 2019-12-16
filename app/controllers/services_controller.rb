@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
     get "/services" do
         if logged_in? && current_user.kind!="user"
-            @services = StandardService.all
+            @services = StandardService.all.sort { |s1, s2| s1.name <=> s2.name }
 
             erb :'services/index'
         else
