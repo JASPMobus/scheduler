@@ -7,7 +7,7 @@
     </tr>
     <% 25.times do |i| %>
         <% if i>= 12 %> 
-            <% i += 3 %><!-- skip lunch hour -->
+            <% i -= 33 %><!-- skip lunch hour, use 12 hour clock -->
         <% end %>
         <tr>
         <th><%= time=Temporal.iter_to_time(i) %></th>
