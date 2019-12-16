@@ -13,7 +13,11 @@ class AppointmentsController < ApplicationController
         if time_check.class != String
             appointment = Appointment.create(params, current_user)
     
-            redirect "/appointments"
+            if current_user.kind != "user"
+                redirect "/appointments"
+            else
+                redirect "/account/appointments" 
+            end
         else
             redirect "/error/#{time_check}"
         end
@@ -30,10 +34,12 @@ class AppointmentsController < ApplicationController
     end
 
     get "/appointments/:id" do
-        if logged_in? && current_user.kind!="user"
-            @appointment = Appointment.find(params[:id])
+        @appointment = Appointment.find(params[:id])
 
-            if current_user.kind=="provider" && @appointment.provider!=current_user
+        if logged_in? && (current_user.kind!="user" || @appointment.user==current_user)
+            @user = current_user
+
+            if @user.kind=="provider" && @appointment.provider!=@user && @appointment.user!=@user
                 redirect "/appointments"
             else 
                 erb :'appointments/appointment'

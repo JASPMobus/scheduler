@@ -52,17 +52,16 @@ class User < ActiveRecord::Base
             #it doesn't matter if the conflict is with the appointment about to be changed.
             if appointment.id != id
                 #check if they're on the same day first
-                if datetime.to_date != appointment.start_time.to_date
-                    return false
-                else
-                    #now we know they're on the same day.
+                if datetime.to_date == appointment.start_time.to_date
                     #query 1: does the old appointment start during the new one? 
-                    q1 = Temporal.is_during_appointment?(appointment.start_time, datetime, appointment.duration)
+                    q1 = Temporal.is_during_appointment?(appointment.start_time, datetime, duration)
 
                     #query 2: does the new appointment start during the old one?
                     q2 = Temporal.is_during_appointment?(datetime, appointment.start_time, appointment.duration)
 
-                    return !q1 && !q2
+                    if q1 || q2
+                        return false
+                    end
                 end
             end
         end
@@ -74,7 +73,7 @@ class User < ActiveRecord::Base
             return "bad-password"
         elsif params[:password1] != params["password2"]
             return "password-confirmation"
-        elsif username_not_taken?(params["username"])
+        elsif !username_not_taken?(params["username"])
             return "username-already-taken"
         end
     end

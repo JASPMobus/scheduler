@@ -14,6 +14,18 @@ class Appointment < ActiveRecord::Base
         User.find(self.user_id)
     end
 
+    def date 
+        start_time.strftime("%Y-%m-%d")
+    end
+
+    def date_display
+        start_time.strftime("%A, %b %d")
+    end
+
+    def time
+        start_time.strftime("%l:%M")
+    end
+
     def self.create(params, user)
         #fields
         #t.datetime "start_time"

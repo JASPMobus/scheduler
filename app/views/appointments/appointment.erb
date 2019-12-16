@@ -1,12 +1,17 @@
 <p>Client Name: <%= @appointment.user.full_name %></p>
 <p>Provider Name: <%= @appointment.provider.full_name %></p>
-<p>Date: <%= @appointment.start_time.strftime("%A, %b %d") %></p>
-<p>Time: <%= @appointment.start_time.strftime("%l:%M") %></p> 
+<p>Date: <%= @appointment.date_display %></p>
+<p>Time: <%= @appointment.time %></p> 
 <p>Duration: <%= @appointment.duration %> minutes</p>
-<p>Notes: <%= @appointment.notes %></p>
-<br>
-<form action="/appointments/<%= @appointment.id %>" method="POST">
-<input id="hidden" type="hidden" name="_method" value="DELETE">
-<p><a href="/appointments/<%= @appointment.id %>/edit">Edit This Appointment</a> | <input class="submit" type="submit" value="Delete This Appointment"> </p>
-</form>
-<p><a href="/appointments">View All Appointments</a></p>
+<% if @user.kind!="user" %>
+    <p>Notes: <%= @appointment.notes %></p>
+    <br>
+    <form action="/appointments/<%= @appointment.id %>" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="DELETE">
+    <p><a href="/appointments/<%= @appointment.id %>/edit">Edit This Appointment</a> | <input class="submit" type="submit" value="Delete This Appointment"> </p>
+    </form>
+    <p><a href="/appointments">View All Appointments</a></p>
+<% else %>
+    <br>
+    <p><a href="/account/appointments">Back</a></p>
+<% end %>

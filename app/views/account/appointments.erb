@@ -1,7 +1,20 @@
+<h4>Your Appointments</h4>
 <% if @appointments != [] %>
-    <% @appointments.each do |appointment| %>
-        <%= @appointment.class %>    
-    <% end %>
+    <table>
+        <tr>
+            <th>Date And Time</th>
+            <th>Duration</th>
+            <th>Provider</th>
+        </tr>
+        <% @appointments.each do |appointment| %>
+            <tr>
+                <th><a href="/appointments/<%= appointment.id %>"><%= appointment.date_display %> at <%= appointment.time %></a></th>
+                <td><%= appointment.duration %> minutes</td>
+                <td><%= appointment.provider.full_name %></td> 
+            </tr>  
+        <% end %>
+    </table>
 <% else %>
-    You do not have any appointments. Would you like to <a href="/schedule">schedule</a> one?
+    <p>You do not currently have any appointments scheduled</p>
 <% end %>
+<p><a href="/schedule">Schedule An Appointment</a> | <a href="/account">Return To Account</a></p>
