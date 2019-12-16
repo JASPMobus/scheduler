@@ -99,6 +99,8 @@ class AppointmentsController < ApplicationController
                     #Then updates them
                     @appointment.update(params)
 
+                    Service.attach(params["service"].first, @appointment.id)
+
                     #Then returns to their user view page
                     redirect "/appointments/#{params[:id]}"
                 else
@@ -127,5 +129,23 @@ class AppointmentsController < ApplicationController
 		else
 			redirect "/error/lacking-privileges"
 		end 
-	end
+    end
+    
+    get "/appointments/:id/services" do
+        @appointment = Appointment.find(params[:id])
+
+        if logged_in? && (current_user.kind!="user" || @appointment.user==current_user)
+            @user = current_user
+
+            if @user.kind=="provider" && @appointment.provider!=@user && @appointment.user!=@user
+                redirect "/appointments"
+            else 
+                @services = Service.all.filter { |service| service.appointment_id=@appointment.id }
+
+                erb :'appointments/services'
+            end
+        else
+            redirect "/error/lacking-privileges"
+        end
+    end
 end

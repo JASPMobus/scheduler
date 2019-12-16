@@ -18,7 +18,7 @@
 <p>Appointment Services:</p>
 <p>
 <% @services.each do |service| %>
-    <input style="width:40px;text-align:right;" min=0 type=number name=service[][<%= service.id %>][number]> <%= service.name %><br>
+    <input style="width:40px;text-align:right;" min=0 type=number name=service[][<%= service.id %>]> <%= service.name %><br>
 <% end %>
 </p>
 <p>Appointment Notes:</p>

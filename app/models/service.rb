@@ -16,6 +16,46 @@ class Service < ActiveRecord::Base
         service
     end
 
+    def self.clone(service, appointment_id)
+        new_service = Service.new
+
+        new_service.name            = service.name
+        new_service.price           = service.price
+        new_service.description     = service.description
+        new_service.appointment_id  = appointment_id
+        new_service.standard        = false
+
+        new_service.save
+    end
+
+    def self.attach(services, appointment_id)
+        services.each do |id, amount|
+            id = id.to_i
+            amount = amount.to_i
+
+            puts "id: #{id}, amount: #{amount}"
+
+            service = Service.find(id.to_i)
+            
+            already_made        = Service.all.filter { |check| check.name==service.name && check.appointment_id==appointment_id  }
+            already_made_amount = already_made.length
+
+            if amount < already_made_amount
+                difference = already_made_amount - amount
+
+                difference.times do
+                    already_made.shift
+                end
+            elsif amount > already_made_amount
+                difference = amount - already_made_amount
+
+                difference.times do
+                    clone(service, appointment_id)
+                end
+            end
+        end
+    end
+
     #Updates the service
     def update(params)
         #Grabs all of the info

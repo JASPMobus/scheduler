@@ -1,0 +1,20 @@
+<h4>Attached Services</h4>
+<% if @services != [] %>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+        </tr>
+        <% @services.each do |service| %>
+            <tr>
+                <th><a href="/services/<%= service.id %>"><%= service.name %></a></th>
+                <td>$<%= service.price %></td>
+                <td><%= service.description %></td> 
+            </tr>  
+        <% end %>
+    </table>
+<% else %>
+    <p>You have not attached any services to this appointment.</p>
+<% end %>
+<p><a href="/services/new">Create A New Service</a></p>

@@ -4,6 +4,7 @@
 <p>Time: <%= @appointment.time %></p> 
 <p>Duration: <%= @appointment.duration %> minutes</p>
 <% if @user.kind!="user" %>
+    <p><a href="/appointments/<%= @appointment.id %>/services">View Attached Services</a></p>
     <p>Notes: <%= @appointment.notes %></p>
     <br>
     <form action="/appointments/<%= @appointment.id %>" method="POST">
