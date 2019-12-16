@@ -11,6 +11,17 @@ class Temporal
         time_split.length!=2 || time_split[0].length>2 || time_split[1].length!=2 || !are_numeric?(time_split) || time_split[0].to_i > 24 || time_split[1].to_i > 60
     end
 
+    def self.outside_business_hours?(datetime, duration)
+        start   = comparatize(datetime.strftime("%k:%M"))
+        finish  = time_after_x_minutes(start, duration)
+
+        puts start 
+        puts finish
+
+        # starts in early morning || starts in the morning, ends after noon || starts in the afternoon, ends after work
+        (5 < start && start < 8) || ( 8 < start && start < 12 && (finish < 8 || finish > 12)) || (finish > 5 && start < 5)
+    end
+
     #checks that the provided time is acceptable
     def self.acceptable_time?(params, user, appointment = nil)
         #makes sure that the time part is a good format.
@@ -21,10 +32,11 @@ class Temporal
         elsif check_date(params["date"])
             return "incorrect-date-format"
 
-        #checks if the user or the provider are busy during the appointment.
+        #for the rest of the checks, we need to check the actual time, and not just its format
         else
             datetime = Temporal.generate_datetime(params["date"], params["time"])
 
+            #making sure that the user and provider don't already have appointments at the given time.
             if appointment
                 if !user.is_available?(datetime, params["duration"], appointment.id) || !User.find(params["provider_id"]).is_available?(datetime, params["duration"], appointment.id)
                     return "time-unavailable"
@@ -33,6 +45,11 @@ class Temporal
                 if !user.is_available?(datetime, params) || !User.find(params["provider_id"]).is_available?(datetime, params["duration"])
                     return "time-unavailable"
                 end
+            end
+
+            #making sure that the appointment happens during business hours
+            if outside_business_hours?(datetime, params["duration"])
+                return "provider-not-working-then"
             end
 
             return true
