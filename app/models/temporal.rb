@@ -80,7 +80,6 @@ class Temporal
         start       = comparatize(time1.strftime("%k:%M"))
         check       = comparatize(time2.strftime("%k:%M"))
         finish      = time_after_x_minutes(start, duration)
-        midpoint    = (start+finish)/2
 
         start <= check && check < finish
     end

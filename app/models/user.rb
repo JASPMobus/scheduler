@@ -10,15 +10,6 @@ class User < ActiveRecord::Base
         "#{self.first_name} #{self.last_name}"
     end
 
-    #Adds in any appointments that this user is the provider for
-    def appointments
-        pre_providing = super
-
-        providing = Appointment.all.filter { |appointment| appointment.provider_id = self.id }
-
-        pre_providing + providing
-    end
-
     #Updates the user
     def update(params)
        #Grabs all of the info
@@ -45,6 +36,11 @@ class User < ActiveRecord::Base
         self.save
     end
 
+    #Adds in any appointments that this user is the provider for
+    def appointments
+        Appointment.all.filter { |appointment| appointment.provider_id == self.id || appointment.user_id == self.id}
+    end
+
     #Checks to see if this user has an appointment at this time
     def has_appointment?(date, time)
         datetime = Temporal.generate_datetime(date, time)
@@ -54,6 +50,7 @@ class User < ActiveRecord::Base
 
     #Checks to see whether the user is busy at that given time, intended for provider appointment checks
     def is_available?(datetime, duration, id = 0)
+
         #Do any appointments start during this time? Does this start during any of the appointments' times?
         appointments.each do |appointment|
             #it doesn't matter if the conflict is with the appointment about to be changed.
@@ -61,12 +58,13 @@ class User < ActiveRecord::Base
                 #check if they're on the same day first
                 if datetime.to_date == appointment.start_time.to_date
                     #query 1: does the old appointment start during the new one? 
-                    q1 = Temporal.is_during_appointment?(appointment.start_time, datetime, duration)
+                    q1 = Temporal.is_during_appointment?(appointment.start_time, datetime, appointment.duration)
 
                     #query 2: does the new appointment start during the old one?
-                    q2 = Temporal.is_during_appointment?(datetime, appointment.start_time, appointment.duration)
+                    q2 = Temporal.is_during_appointment?(datetime, appointment.start_time, duration)
 
                     if q1 || q2
+
                         return false
                     end
                 end

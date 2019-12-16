@@ -98,6 +98,30 @@ class ApplicationController < Sinatra::Base
 		end
 	end
 
+	get "/clear_all" do
+		if logged_in? && current_user.kind=="admin"
+			Service.all.each do |s|
+				s.delete
+			end
+
+			StandardService.all.each do |ss|
+				ss.delete
+			end
+
+			Appointment.all.each do |a|
+				a.delete
+			end
+
+			User.all.each do |u|
+				u.delete
+			end
+
+			redirect "/logout"
+		else
+			redirect "/error/lacking-privileges"
+		end
+	end
+
 	helpers do
 		#If the session has a user_id, then a user must be logged in
 		def logged_in?
