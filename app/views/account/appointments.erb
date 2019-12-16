@@ -4,13 +4,17 @@
         <tr>
             <th>Date And Time</th>
             <th>Duration</th>
-            <th>Provider</th>
+            <th>Provider<% if @user.kind=="provider" %> or Client<% end %></th>
         </tr>
         <% @appointments.each do |appointment| %>
             <tr>
                 <th><a href="/appointments/<%= appointment.id %>"><%= appointment.date_display %> at <%= appointment.time %></a></th>
                 <td><%= appointment.duration %> minutes</td>
-                <td><%= appointment.provider.full_name %></td> 
+                <% if appointment.provider_id != @user.id %>
+                    <td><%= appointment.provider.full_name %></td>
+                <% else %>
+                    <td><%= appointment.user.full_name %></td>
+                <% end %>
             </tr>  
         <% end %>
     </table>

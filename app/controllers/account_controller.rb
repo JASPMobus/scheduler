@@ -42,7 +42,7 @@ class AccountController < ApplicationController
 		#If you're logged in, we store your info and go to your appointments page
 		if logged_in?
             @user = current_user
-            @appointments = Appointment.all.filter { |appointment| appointment.user_id == @user.id }
+            @appointments = Appointment.all.filter { |appointment| appointment.user_id == @user.id || appointment.provider_id == @user.id }
 
 			erb :'account/appointments'
 		#Otherwise, we redirect them to the login page
