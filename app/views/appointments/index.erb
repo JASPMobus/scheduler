@@ -1,3 +1,19 @@
-<% @appointments.each do |appointment| %>
-    <p><a href="/appointments/<%= appointment.id %>"><%= appointment.id %></a></p>
+<h4>Appointments</h4>
+<% if @appointments != [] %>
+    <table>
+        <tr>
+            <th>Date And Time</th>
+            <th>Duration</th>
+            <th>Provider</th>
+        </tr>
+        <% @appointments.each do |appointment| %>
+            <tr>
+                <th><a href="/appointments/<%= appointment.id %>"><%= appointment.date_display %> at <%= appointment.time %></a></th>
+                <td><%= appointment.duration %> minutes</td>
+                <td><%= appointment.provider.full_name %></td> 
+            </tr>  
+        <% end %>
+    </table>
+<% else %>
+    <p>No appointments have been scheduled.</p>
 <% end %>

@@ -45,6 +45,13 @@ class User < ActiveRecord::Base
         self.save
     end
 
+    #Checks to see if this user has an appointment at this time
+    def has_appointment?(date, time)
+        datetime = Temporal.generate_datetime(date, time)
+
+        !is_available?(datetime, 20) #the time is broken up into 20 minute blocks
+    end
+
     #Checks to see whether the user is busy at that given time, intended for provider appointment checks
     def is_available?(datetime, duration, id = 0)
         #Do any appointments start during this time? Does this start during any of the appointments' times?
@@ -106,11 +113,6 @@ class User < ActiveRecord::Base
 
         #Save the user after updating it with the new fields
         user.save
-    end
-
-    #Checks to see if this user has an appointment at this time
-    def has_appointment?(time)
-        true
     end
 
     private
