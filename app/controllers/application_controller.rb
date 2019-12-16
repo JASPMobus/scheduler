@@ -9,6 +9,12 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/" do
+		if logged_in?
+			@user = current_user
+		else
+			@user = nil
+		end
+
 		#The home page
 		erb :index
 	end
