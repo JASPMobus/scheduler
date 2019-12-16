@@ -17,4 +17,4 @@
 <% else %>
     <p>You have not attached any services to this appointment.</p>
 <% end %>
-<p><a href="/services/new">Create A New Service</a></p>
+<p><a href="/appointments/<%= @appointment.id %>/edit">Edit Attached Services</a></p>

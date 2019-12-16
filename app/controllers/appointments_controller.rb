@@ -100,7 +100,7 @@ class AppointmentsController < ApplicationController
         if logged_in? && current_user.kind!="user"
             @user = current_user
             @providers = User.all.filter { |user| user.kind == "provider" }
-            @services = Service.all
+            @services = StandardService.all
             @appointment = Appointment.find(params[:id])
 
             erb :'appointments/edit'

@@ -1,5 +1,5 @@
 class Service < ActiveRecord::Base 
-    belongs_to :appointment_id
+    belongs_to :appointment
 
     def self.clone(service, appointment_id)
         new_service = Service.new
@@ -17,8 +17,10 @@ class Service < ActiveRecord::Base
             id = id.to_i
             amount = amount.to_i
 
-            service = StandardService.find(id.to_i)
+            #grab the service template
+            service             = StandardService.find(id.to_i)
             
+            #check how many already exist
             already_made        = Service.all.filter { |check| check.name==service.name && check.appointment_id==appointment_id  }
             already_made_amount = already_made.length
 
