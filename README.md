@@ -5,9 +5,9 @@ An app that allows for users to schedule appointments with providers. Users subm
 
 To install this app, clone the repository. Then, run
 
-'''
+```
 $ bundle install
-'''
+```
 
 After that, the app should be useable. I used shotgun to view and interact with it, but you can use whatever works for you!
 
