@@ -15,9 +15,6 @@ class Temporal
         start   = comparatize(datetime.strftime("%k:%M"))
         finish  = time_after_x_minutes(start, duration)
 
-        puts start 
-        puts finish
-
         # starts in early morning || starts in the morning, ends after noon || starts in the afternoon, ends after work
         (5 < start && start < 8) || ( 8 < start && start < 12 && (finish < 8 || finish > 12)) || (finish > 5 && start < 5)
     end

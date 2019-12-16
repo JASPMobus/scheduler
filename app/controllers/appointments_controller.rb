@@ -88,13 +88,12 @@ class AppointmentsController < ApplicationController
 
     patch "/appointments/:id" do
 		#Finds the appointment
-		@appointment = Appointment.find(params[:id])
+        @appointment = Appointment.find(params[:id])
 
 		if logged_in? && current_user.kind!="user"
             if @appointment
                 #checks that the input time is acceptable format
                 time_check = Temporal.acceptable_time?(params, @appointment.user, @appointment)
-                puts time_check
 
                 if time_check.class != String
                     #Then updates them
