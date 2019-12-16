@@ -8,7 +8,7 @@
         </tr>
         <% @services.each do |service| %>
             <tr>
-                <th><a href="/services/<%= service.id %>"><%= service.class %></a></th>
+                <th><a href="/services/<%= service.id %>"><%= service.name %></a></th>
                 <td>$<%= service.price %></td>
                 <td><%= service.description %></td> 
             </tr>  
