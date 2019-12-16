@@ -3,10 +3,7 @@
 <% if @user.kind != "user" %>
     <p>User Type: <%= @user.kind %></p>
     <p>User Notes: <%= @user.notes %></p>
-    <br>
-    <p><a href="/users">View All Users</a> | <a href="/appointments">View All Appointments</a> | <a href="/account/appointments">View Your Appointments</a></p>
-<% else %>
-    <br>
-    <p><a href="/account/appointments">View Your Appointments</a></p>
 <% end %>
+<br>
+<p><a href="/account/appointments">View Your Appointments</a><% if @user.kind!="user" %> | <a href="/management">Visit Management Page</a><% end %></p>
 <p><a href="/account/edit">Edit Your Account</a> | <a href="/logout">Log Out</a></p>

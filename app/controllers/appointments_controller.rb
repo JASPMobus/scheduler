@@ -1,16 +1,24 @@
 class AppointmentsController < ApplicationController
     get "/appointments/new" do
-        @date           = session["date"]
-        @time           = session["time"]
-        @provider_id    = session["provider_id"].to_i
-        session.delete("date")
-        session.delete("time")
-        session.delete("provider_id")
+        if logged_in?
+            @date           = session["date"]
+            @time           = session["time"]
+            @provider_id    = session["provider_id"].to_i
+            session.delete("date")
+            session.delete("time")
+            session.delete("provider_id")
 
-        #grabs all of the providers
-        @providers = User.all.filter { |user| user.kind == "provider" }
+            #grabs all of the providers
+            @providers = User.all.filter { |user| user.kind == "provider" }
 
-        erb :'appointments/new'
+            erb :'appointments/new'
+        else
+            session.delete("date")
+            session.delete("time")
+            session.delete("provider_id")
+            
+            redirect "/login"
+        end
     end
 
     get "/appointments/new/:info" do

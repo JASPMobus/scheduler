@@ -90,6 +90,14 @@ class ApplicationController < Sinatra::Base
 		redirect "/"
 	end
 
+	get "/management" do
+		if logged_in? && current_user.kind!="user"
+			erb :management
+		else
+			redirect "/error/lacking-privileges"
+		end
+	end
+
 	helpers do
 		#If the session has a user_id, then a user must be logged in
 		def logged_in?

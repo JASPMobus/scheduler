@@ -7,3 +7,4 @@ use UsersController
 use AccountController
 use ScheduleController
 use AppointmentsController
+use ServicesController
