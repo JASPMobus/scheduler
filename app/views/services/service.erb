@@ -1,0 +1,9 @@
+<h4>Name: <%= @service.name %></h4>
+<p>Price: <%= @service.price %></p>
+<p>Description: <%= @service.description %></p>
+<br>
+<form action="/services/<%= @service.id %>" method="POST">
+<input id="hidden" type="hidden" name="_method" value="DELETE">
+<p><a href="/services/<%= @service.id %>/edit">Edit This Service</a> | <input class="submit" type="submit" value="Delete This Service"> </p>
+</form>
+<p><a href="/services">View All Services</a></p>

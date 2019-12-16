@@ -15,6 +15,12 @@
     <p>Time: <%= @appointment.time %></p>
     <p>Duration: <%= @appointment.duration %> minutes</p>
 <% end %>
+<p>Appointment Services:</p>
+<p>
+<% @services.each do |service| %>
+    <input style="width:40px;text-align:right;" min=0 type=number name=service[][<%= service.id %>][number]> <%= service.name %><br>
+<% end %>
+</p>
 <p>Appointment Notes:</p>
 <p><textarea rows="4" cols="50" name=notes><%= @appointment.notes %></textarea></p>
 <p><input type=submit value="I'm Done"> <input type=reset></p>

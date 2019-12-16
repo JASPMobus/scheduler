@@ -1,0 +1,11 @@
+<form action="/services" method="POST">
+    <p>Name:</p>
+    <p><input type=text name=name value=<%= @service.name %>></p>
+    <p>Price:</p>
+    <p><input type=number name=price value=<%= @service.price %>></p>
+    <p>Description:</p>
+    <p><textarea rows="4" cols="50" name=description ><%= @service.description %></textarea></p>
+    <p><input type=submit value="I'm Done"> <input type=reset></p>
+</form>
+<br>
+<p><a href="/services">View All Services</a></p>
