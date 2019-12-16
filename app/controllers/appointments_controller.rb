@@ -59,8 +59,8 @@ class AppointmentsController < ApplicationController
     
 	get "/appointments/schedule" do
 		#grabs all of the providers and the date
-		@providers = User.all.filter { |user| user.kind == "provider" }
-		@date = Date.today
+		@providers  = User.all.filter { |user| user.kind == "provider" }
+		@date       = Date.today
 
 		#The schedule page
 		erb :'appointments/schedule'
@@ -70,8 +70,8 @@ class AppointmentsController < ApplicationController
 		check_date = Temporal.check_date(params[:date])
 		if check_date.class != String
 			#grabs all of the providers and the date
-			@providers = User.all.filter { |user| user.kind == "provider" }
-			@date = Date.parse(params["date"])
+			@providers  = User.all.filter { |user| user.kind == "provider" }
+			@date       = Date.parse(params["date"])
 
 			erb :'appointments/schedule'
 
@@ -98,10 +98,11 @@ class AppointmentsController < ApplicationController
 
     get "/appointments/:id/edit" do
         if logged_in? && current_user.kind!="user"
-            @user = current_user
-            @providers = User.all.filter { |user| user.kind == "provider" }
-            @services = StandardService.all
-            @appointment = Appointment.find(params[:id])
+            @appointment        = Appointment.find(params[:id])
+            @providers          = User.all.filter { |user| user.kind == "provider" }
+            @services           = Service.all.filter { |service| service.appointment_id = @appointment.id }
+            @standardservices   = StandardService.all
+            @user               = current_user
 
             erb :'appointments/edit'
         else
