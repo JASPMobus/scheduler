@@ -28,7 +28,7 @@ class Service < ActiveRecord::Base
                 difference = already_made_amount - amount
 
                 difference.times do
-                    already_made.shift
+                    already_made.first.delete
                 end
             elsif amount > already_made_amount
                 difference = amount - already_made_amount
