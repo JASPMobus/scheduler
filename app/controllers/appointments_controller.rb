@@ -77,7 +77,7 @@ class AppointmentsController < ApplicationController
         if logged_in? && current_user.kind!="user"
             @user = current_user
             @providers = User.all.filter { |user| user.kind == "provider" }
-            @services = Service.all.filter { |service| service.standard }
+            @services = Service.all
             @appointment = Appointment.find(params[:id])
 
             erb :'appointments/edit'
@@ -140,7 +140,7 @@ class AppointmentsController < ApplicationController
             if @user.kind=="provider" && @appointment.provider!=@user && @appointment.user!=@user
                 redirect "/appointments"
             else 
-                @services = Service.all.filter { |service| service.appointment_id=@appointment.id }
+                @services = Service.all
 
                 erb :'appointments/services'
             end

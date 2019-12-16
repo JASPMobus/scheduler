@@ -25,7 +25,7 @@ class ServicesController < ApplicationController
 
     get "/services/:id" do
         if logged_in? && current_user.kind!="user"
-            @service =StandardService.find(params[:id])
+            @service = StandardService.find(params[:id])
 
             if @service
                 erb :'services/service'
@@ -39,7 +39,7 @@ class ServicesController < ApplicationController
 
     get "/services/:id/edit" do
         if logged_in? && current_user.kind=="admin"
-            @service =StandardService.find(params[:id])
+            @service = StandardService.find(params[:id])
 
             if @service
                 erb :'services/edit'
@@ -52,7 +52,7 @@ class ServicesController < ApplicationController
     end
 
     patch "/services/:id" do 
-        @service =StandardService.find(params[:id])
+        @service = StandardService.find(params[:id])
 
         if @service
             @service.update(params)
@@ -65,7 +65,7 @@ class ServicesController < ApplicationController
 
     delete "/services/:id" do
 		#Finds the service
-		@service =StandardService.find(params[:id])
+		@service = StandardService.find(params[:id])
 
 		if logged_in? && current_user.kind=="admin"
 			if @service

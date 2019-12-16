@@ -17,7 +17,7 @@ class Service < ActiveRecord::Base
             id = id.to_i
             amount = amount.to_i
 
-            service = Service.find(id.to_i)
+            service = StandardService.find(id.to_i)
             
             already_made        = Service.all.filter { |check| check.name==service.name && check.appointment_id==appointment_id  }
             already_made_amount = already_made.length
