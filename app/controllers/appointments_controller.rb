@@ -1,9 +1,25 @@
 class AppointmentsController < ApplicationController
     get "/appointments/new" do
+        @date           = session["date"]
+        @time           = session["time"]
+        @provider_id    = session["provider_id"].to_i
+        session.delete("date")
+        session.delete("time")
+        session.delete("provider_id")
+
         #grabs all of the providers
         @providers = User.all.filter { |user| user.kind == "provider" }
 
         erb :'appointments/new'
+    end
+
+    get "/appointments/new/:info" do
+        session["date"]         = params[:info].split(",")[0]
+        session["time"]         = params[:info].split(",")[1]
+        session["provider_id"]  = params[:info].split(",")[2]
+        @session = session
+
+        redirect "/appointments/new"
     end
 
     post "/appointments" do

@@ -19,7 +19,7 @@
             <% end %>
             <td style="background-color:<%= clr %>;">
                 <% if clr != "#000000" %>
-                    <a href="/appointments/new/<%= "#{@date.strftime("%Y-%m-%d")}-#{time}" %>">Book</a>
+                    <a href="/appointments/new/<%= "#{@date.strftime("%Y-%m-%d")},#{time},#{provider.id}" %>">Book</a>
                 <% end %>
             </td>
         <% end %>
