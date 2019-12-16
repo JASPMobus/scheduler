@@ -6,7 +6,7 @@
             <th>Duration</th>
             <th>Provider</th>
         </tr>
-        <% @appointments.each do |appointment| %>
+        <% @appointments.sort { |a1, a2| a1.date+a1.time <=> a2.date+a2.time}.each do |appointment| %>
             <tr>
                 <th><a href="/appointments/<%= appointment.id %>"><%= appointment.date_display %> at <%= appointment.time %></a></th>
                 <td><%= appointment.duration %> minutes</td>
