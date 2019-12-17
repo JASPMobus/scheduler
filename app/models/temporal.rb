@@ -81,7 +81,8 @@ class Temporal
         check       = comparatize(time2.strftime("%k:%M"))
         finish      = time_after_x_minutes(start, duration)
 
-        start <= check && check < finish
+        #the 0.0004 is to correct for rounding of infinitely repeating decimals.
+        start <= check && check < finish - 0.0004
     end
 
     def self.yesterday(date)
