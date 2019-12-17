@@ -21,8 +21,6 @@
                 <td style="background-color:<%= clr %>;">
                     <% if clr != "#000000" %>
                         <a href="/appointments/new/<%= "#{@date.strftime("%Y-%m-%d")},#{time},#{provider.id}" %>">Book</a>
-                    <% else %>
-                        <%=  provider.full_name %>
                     <% end %>
                 </td>
             <% end %>

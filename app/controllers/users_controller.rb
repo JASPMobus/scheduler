@@ -72,10 +72,10 @@ class UsersController < ApplicationController
 		if logged_in? && current_user.kind!="user"
 			if @user
 				#Remove all of the appointments that involve the user
-				@provider_of = Appointment.all.filter { |appointment| appointment.provider_id == @user.id || appointment.user_id = @user.id }
-				@provider_of.each do |appointment|
+				@user_appointments = Appointment.all.filter { |appointment| appointment.provider_id == @user.id || appointment.user_id == @user.id }
+				@user_appointments.each do |appointment|
 					#Remove all of the services attached to those appointments
-					@services = Service.all.filter { |service| service.appointment_id = appointment.id }
+					@services = Service.all.filter { |service| service.appointment_id == appointment.id }
 					@services.each do |service|
 						service.delete
 					end 

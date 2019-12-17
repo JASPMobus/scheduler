@@ -67,7 +67,8 @@ class AppointmentsController < ApplicationController
 	end
 
 	get "/appointments/schedule/:date" do
-		check_date = Temporal.check_date(params[:date])
+        check_date = Temporal.check_date(params[:date])
+        
 		if check_date.class != String
 			#grabs all of the providers and the date
 			@providers  = User.all.filter { |user| user.kind == "provider" }
@@ -97,8 +98,9 @@ class AppointmentsController < ApplicationController
     end
 
     get "/appointments/:id/edit" do
-        if logged_in? && current_user.kind!="user"
-            @appointment        = Appointment.find(params[:id])
+        @appointment        = Appointment.find(params[:id])
+
+        if logged_in? && (current_user.kind!="user" || @appointment.user == current_user)
             @providers          = User.all.filter { |user| user.kind == "provider" }
             @services           = Service.all.filter { |service| service.appointment_id = @appointment.id }
             @standardservices   = StandardService.all
@@ -114,7 +116,7 @@ class AppointmentsController < ApplicationController
 		#Finds the appointment
         @appointment = Appointment.find(params[:id])
 
-		if logged_in? && current_user.kind!="user"
+		if logged_in? && (current_user.kind!="user" || @appointment.user == current_user)
             if @appointment
                 #checks that the input time is acceptable format
                 time_check = Temporal.acceptable_time?(params, @appointment.user, @appointment)
@@ -123,8 +125,11 @@ class AppointmentsController < ApplicationController
                     #Then updates them
                     @appointment.update(params)
 
-                    Service.attach(params["service"].first, @appointment.id)
-
+                    #Attaches any services listed.
+                    if params["service"]
+                        Service.attach(params["service"].first, @appointment.id)
+                    end
+                    
                     #Then returns to their user view page
                     redirect "/appointments/#{params[:id]}"
                 else
@@ -142,8 +147,13 @@ class AppointmentsController < ApplicationController
 		#Finds the appointment
 		@appointment = Appointment.find(params[:id])
 
-		if logged_in? && current_user.kind!="user" && current_user.kind!="provider"
-			if @appointment
+		if logged_in? && (current_user.kind!="user" || @appointment.user_id == current_user) && current_user.kind!="provider"
+            if @appointment
+                @services = Service.all.filter { |service| service.appointment_id == @appointment.id }
+                @services.each do |service|
+                    service.delete
+                end
+
 				@appointment.delete
 
 				redirect "/appointments"
@@ -158,7 +168,7 @@ class AppointmentsController < ApplicationController
     get "/appointments/:id/services" do
         @appointment = Appointment.find(params[:id])
 
-        if logged_in? && (current_user.kind!="user" || @appointment.user==current_user)
+        if logged_in? && (current_user.kind!="user" || @appointment.user == current_user)
             @user = current_user
 
             if @user.kind=="provider" && @appointment.provider!=@user && @appointment.user!=@user

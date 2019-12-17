@@ -14,5 +14,9 @@
     <p><a href="/appointments">View All Appointments</a></p>
 <% else %>
     <br>
+    <form action="/appointments/<%= @appointment.id %>" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="DELETE">
+    <p><a href="/appointments/<%= @appointment.id %>/edit">Edit This Appointment</a> | <input class="submit" type="submit" value="Delete This Appointment"> </p>
+    </form>
     <p><a href="/account/appointments">Return To Your Appointments</a></p>
 <% end %>
