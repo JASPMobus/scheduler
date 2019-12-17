@@ -15,5 +15,7 @@
 <p><textarea rows="4" cols="50" name=notes><%= @user.notes %></textarea></p>
 <p><input type=submit value="I'm Done"> <input type=reset></p>
 </form>
-<br>
-<p><a href="/users">View All Users</a></p>
+<% if @user.kind != "user" %>
+    <br>
+    <p><a href="/users">View All Users</a></p>
+<% end %>

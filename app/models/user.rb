@@ -64,7 +64,6 @@ class User < ActiveRecord::Base
                     q2 = Temporal.is_during_appointment?(datetime, appointment.start_time, duration)
 
                     if q1 || q2
-
                         return false
                     end
                 end

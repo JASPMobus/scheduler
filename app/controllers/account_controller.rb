@@ -14,7 +14,7 @@ class AccountController < ApplicationController
     get "/account/edit" do
 		#If you're logged in, we store your info and go to the user page
 		if logged_in?
-			@user = current_user
+            @user = current_user
 
 			erb :'account/edit'
 		#Otherwise, we redirect them to the login page
@@ -26,7 +26,7 @@ class AccountController < ApplicationController
     patch "/account" do
         if User.username_not_taken?(params["username"])
             #Finds the user
-            @user = User.find_by(username: params[:username])
+            @user = User.find(current_user.id)
 
             #Then updates them
             @user.update(params)
